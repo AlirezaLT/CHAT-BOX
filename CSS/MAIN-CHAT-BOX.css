@@ -56,14 +56,34 @@ backdrop-filter: blur(15px);
     display: flex;
     flex-direction: column;
     gap: 8px;
+    scroll-behavior: smooth; 
+}
+
+.chat-display::-webkit-scrollbar{
+    width: 8px;
+}
+
+.chat-display::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.70);
 }
 
 .CHAT{
-    background:rgba(255, 255, 255, 0.15);
-    padding: 10PX 14PX;
-    border-radius: 15PX;
-    max-width: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 10px 14px;
+    border-radius: 15px;
+    max-width: 60%;
     color: #eee;
+}
+
+.RECEIVED{
+    align-self:flex-start;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.SENT{
+    align-self: flex-end;
+    background: rgba(0, 0, 0,0.60);
 }
 
 footer{
