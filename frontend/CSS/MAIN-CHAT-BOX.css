@@ -1,3 +1,26 @@
+@keyframes cardenter {
+    from{
+    opacity: 0;
+    transform: translateY(40px);}
+
+    to {
+    opacity: 1;
+    transform: translateY(0px);
+    }
+}
+
+@keyframes SRmassages{
+    from {
+        opacity: 0;
+        transform: translateY(10);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 * {
     box-sizing: border-box;
 }
@@ -29,12 +52,13 @@ body{
 }
 
 .main-chat{
-    height: 600px;
+    animation: cardenter 0.8s ease-out both;
+    height: 650px;
     width: 500px;
     display: flex;
     flex-direction: column;
     background: linear-gradient(135deg,#4027f8, #7e9eff);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.50);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.60);
     border-radius: 20px;
     overflow: hidden;
     color: #eee;
@@ -69,6 +93,7 @@ backdrop-filter: blur(15px);
 }
 
 .CHAT{
+    animation: SRmassages 0.35s ease-out both;
     background: rgba(255, 255, 255, 0.15);
     padding: 10px 14px;
     border-radius: 15px;
@@ -109,21 +134,37 @@ footer{
 }
 
 .send-b{
-    width: 120px;
-    padding: 14px;
-    border-radius: 15px;
-    border: none;
-    background: #000000 ;
-    color: white;
-    cursor: pointer;
-    transition: transform 0.3s ease, filter 0.3s ease;
-    flex: 0 0 auto;
-    width: 120px;
+width: 47px;
+height: 47px;
+display: flex;
+align-items: center;
+justify-content: center;
+border: none;
+border-radius: 50%;
+background: linear-gradient(135deg, #ffffff, #dcdcff);
+color: #5b27f8;
+cursor: pointer;
+box-shadow: 0 3px rgba(0, 0, 0, 0.25),inset 0 0 0 rgba(255, 255, 255, 0.4);
+transition: transform 0.25s ease,box-shadow 0.25s ease, background 0.25s ease;
 }
 
 .send-b:hover{
-    filter: brightness(1.1);
-    transform: translateY(-1px);
-    background: #ffffff ;
-    color: rgb(0, 0, 0);
+    transform: translateX(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+}
+
+.send-b:hover .send-icon{
+    transform: translateX(4px);
+}
+
+.send-b:active{
+    transform: scale(0.95);
+}
+
+
+.send-icon{
+    width: 25px;
+    height: 25px;
+    fill: currentColor;
+    transition: transform 0.25s ease, filter 0.25s ease;
 }
