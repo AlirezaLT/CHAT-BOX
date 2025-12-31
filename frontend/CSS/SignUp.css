@@ -1,0 +1,158 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+/*********** Body css ***********/
+
+body{
+    background:url(../photos/BG\ Picture.jpg) no-repeat fixed center/cover;
+    width: 100%;
+    height: 600px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+p{
+    font-size: 17px;
+}
+
+/*********** login-box ***********/
+
+.login-box{
+    background-color: rgba(0, 0, 0, 0.5);
+    display:flex ;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    height: 420px;
+    border-radius: 25px;
+}
+.login-box{
+    border: 3px solid transparent;
+      background:
+        linear-gradient(#111, #0b063d) padding-box,
+        linear-gradient(
+          135deg,
+          #4027f8,
+          #7e9eff,
+          #4027f8
+        ) border-box;
+}
+/*********** Inputs ***********/
+.box-inputs{
+    display: flex;
+    flex-direction: column;
+   height: 300px;
+    gap: 50px;
+   align-items: center;
+   margin: 25px 0px;
+}
+.inputs{
+    background-color: rgba(0, 0, 0, 0.0);
+    border: none;
+    border-bottom: 1px solid rgb(0, 238, 255);
+    width: 250px;
+    padding: 5px;
+    color: white;
+    font-size: 15px;
+    transition: width 0.4s ease-in-out;
+}
+
+input::placeholder{
+    color: rgb(0, 238, 255);
+    opacity: 1;
+    font-size: 17px;
+    font-weight: bold;
+}
+input:hover::placeholder{
+    color: rgb(0, 119, 255) ;
+}
+input:focus::placeholder{
+    color: rgb(0, 119, 255) ;
+}
+.inputs:focus{
+    outline: none;
+    border: none;
+    border-bottom: 2px solid rgb(0, 119, 255);
+    width: 100%;
+}
+.inputs:hover{
+    outline: none;
+    border: none;
+    border-bottom: 2px solid rgb(0, 119, 255);
+    width: 100%;
+}
+.Sign-up{
+    text-align: center;
+}
+.have-account{
+    text-align: center;
+    display: flex;
+    font-size: 17px;
+    align-items: center;
+    justify-content: center;
+}
+.have-account a {
+    margin-left: 5px;
+    color: rgb(0, 204, 255);
+    text-decoration: none;
+}
+.submit{
+    width: 75px;
+    margin: 17px;
+    padding: 7px;
+    border-radius: 30px;
+    border: none;
+    background: linear-gradient(
+        135deg,
+        #4027f8,
+        #7e9eff,
+        #4027f8
+      );
+      color: white;
+      font-weight: bold;
+      transition: width 0.4s ease-in-out;
+}
+.submit:hover{
+    height: 35px ;
+    color: #0b063d;
+    font-weight: bolder;
+
+}
+/* ============================
+   RESPONSIVE DESIGN (Mobile)
+   ============================ */
+@media (max-width: 768px) {
+    body{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+@media (max-width: 480px) {
+    body{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+@media (max-width: 380px) {
+    body{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+@media (max-width: 310px) {
+    body{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .login-box{
+        width: 270px;
+        height: 400px;
+    }
+}
