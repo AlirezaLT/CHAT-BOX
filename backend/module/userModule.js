@@ -1,5 +1,4 @@
 import db from "../utilities/db.js"
-import jalaali from "jalaali-js";
 
 
 class userModule {

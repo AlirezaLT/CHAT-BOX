@@ -13,12 +13,16 @@
             <div class="have-account"><p>Already have an account</p><a href="/login">Login</a></div>
             <br>
             <div class="box-inputs">
-                <input class="inputs" type="text" name="username" placeholder="UserName">
-                <input class="inputs" type="password" name="password" placeholder="Password">
-                <input class="inputs" type="password" name="confirmPassword" placeholder="Confirm Password">
+                <input class="inputs" type="text" name="username" placeholder="UserName" autocomplete="username">
+                <input class="inputs" id="password" type="password" name="password" placeholder="Password" autocomplete="new-password">
+               <input class="inputs" id="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm Password" autocomplete="new-password"/>
+
                 <button type="submit" class="submit">Sign Up</button>
-            </div>
+                <div id="notification-container"></div>
+            </div> 
         </form>
     </div>
+    <script src="../js/notification.js"></script>
+    <script src="../js/signup.js"></script>
 </body>
 </html>
