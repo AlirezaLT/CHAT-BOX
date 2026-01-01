@@ -9,9 +9,9 @@ const pageController ={
         res.sendFile(path.join(__dirname,'../../frontend','HTML','MAIN-CHAT-BOX.html'))
     },
         login:(req,res)=>{
-        res.sendFile(path.join(__dirname,'../../frontend','HTML','MAIN-CHAT-BOX.html'))
+        res.sendFile(path.join(__dirname,'../../frontend','HTML','login.html'))
     },
-        register:(req,res)=>{
+        signup:(req,res)=>{
         res.sendFile(path.join(__dirname,'../../frontend','HTML','SignUp.html'))
     }
 }
