@@ -19,8 +19,14 @@
   },
   "homepage": "https://github.com/AlirezaLT/CHAT-BOX#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "jalaali-js": "^1.2.8",
+    "joi": "^18.0.2",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.16.0",
     "path": "^0.12.7",
     "socket.io": "^4.8.3"
   }

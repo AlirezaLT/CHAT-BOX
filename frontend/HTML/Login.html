@@ -8,16 +8,18 @@
 </head>
 <body>
     <div class="login-box">
-        <form action="">
+        <form action="/login" method="post">
             <h1 class="Login">Login</h1><br>
-            <div class="have-account"><p>I dont have an account</p><a href="">SignUp</a></div>
+            <div class="have-account"><p>I dont have an account</p><a href="/signup">SignUp</a></div>
             <br>
             <div class="box-inputs">
-                <input class="inputs" type="text" placeholder="UserName">
-                <input class="inputs" type="password" placeholder="Password">
+                <input class="inputs" type="text" name="username" placeholder="UserName" autocomplete="username">
+                <input class="inputs" type="password" name="password" placeholder="Password" autocomplete="current-password">
                 <button type="submit" class="submit">Login</button>
             </div>
         </form>
     </div>
+    <script src="../js/notification.js"></script>
+    
 </body>
 </html>

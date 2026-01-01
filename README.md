@@ -1,4 +1,4 @@
-# Run Backend Server on Localhost
+# Run Site on Localhost
 
 This guide explains how to run the backend server on your local machine.
 
