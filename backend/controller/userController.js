@@ -22,8 +22,13 @@ async function login(req, res, next) {
         const userArr = await usermodule.getUser(req.body.username)
         const user = userArr[0];
 
+        if (!user) {
+            // user not found
+            return res.redirect('/login?error=invalidCredentials');
+        }
+
         const validpassword = await bcrypt.compare(req.body.password, user.password)
-        if (!user || !validpassword) {
+        if (!validpassword) {
             return res.redirect('/login?error=invalidCredentials');
         }
 
@@ -34,7 +39,7 @@ async function login(req, res, next) {
 
             res.cookie('token', token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV,
+                secure: process.env.NODE_ENV === 'production',
                 maxAge: 24 * 60 * 60 * 1000
             });
 

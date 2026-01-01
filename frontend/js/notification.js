@@ -70,7 +70,8 @@ window.showInfo = showInfo;
       'UserAlreadyExists': 'User already exists',
       'UserRegistered': 'Your account was created',
       'invalidInput': 'Please check your input',
-      'invalidCredentials': 'Invalid username or password'
+      'invalidCredentials': 'Invalid username or password',
+      'serverError': 'Server error, please try again later'
     };
 
     const prettify = (raw) => {
@@ -101,14 +102,14 @@ window.showInfo = showInfo;
       handled = true;
     }
 
-    // If we handled any, remove those params from URL so they don't repeat
+
     if (handled) {
       const url = new URL(window.location);
-      // keep any remaining params, or clear all if none left
+
       url.search = params.toString();
       window.history.replaceState({}, '', url.toString());
     }
   } catch (err) {
-    // silently ignore parsing errors
+    console.log(err);
   }
 })();
