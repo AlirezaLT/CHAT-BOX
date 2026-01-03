@@ -21,6 +21,17 @@
     }
 }
 
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 @media (max-width: 520px){
     .main-chat{min-height: 100vh; max-width: 100%; border-radius: 0;}
     .chat-display{padding: 8px; gap: 6px;}
@@ -106,18 +117,49 @@ overflow-x: hidden;
     background: rgba(255, 255, 255, 0.15);
     padding: 10px 14px;
     border-radius: 15px;
-    max-width: 60%;
     color: #eee;
+    display: inline-block;
+    max-width: 100%;
+    width: fit-content;
+    word-wrap: break-word;
+    margin-top: 5px;
 }
 
-.RECEIVED{
-    align-self:flex-start;
+.chat-message{
+    display: flex;
+    flex-direction: column;
+    max-width: 60%;
+    align-items: flex-start;
+    margin-top: 8px;
+}
+
+.chat-message.RECEIVED{
+    align-self: flex-start;
+    align-items: flex-start;
+}
+
+
+.chat-message.SENT{
+    align-self: flex-end;
+    align-items: flex-end;
+}
+
+.chat-message.RECEIVED .CHAT{
+    background: rgba(0, 0, 0, 0.60);
+    backdrop-filter: blur(6px);
+}
+
+.chat-message.SENT .CHAT{
     background: rgba(255, 255, 255, 0.2);
 }
 
-.SENT{
-    align-self: flex-end;
-    background: rgba(0, 0, 0,0.60);
+.sender.namem{
+    font-size: 13px;
+    opacity: 0.85;
+    margin-bottom: 4px;
+    padding-left: 6px;
+    width: fit-content;
+    max-width: 100%;
 }
 
 footer{
@@ -178,16 +220,6 @@ transition: transform 0.25s ease,box-shadow 0.25s ease, background 0.25s ease;
     transition: transform 0.25s ease, filter 0.25s ease;
 }
 
-.user-info{
-    padding: 8px 12px;
-    font-size: 14px;
-    opacity: 0.85;
-}
-
-.user-name{
-    font-weight: 600;
-}
-
 /* Notification styles */
 #notification-container {
   position: fixed;
@@ -229,13 +261,3 @@ transition: transform 0.25s ease,box-shadow 0.25s ease, background 0.25s ease;
   background-color: #3498db;
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
