@@ -5,19 +5,8 @@ function auth(req, res, next) {
    const token = req.cookies.token;
 
    if (!token) {
-      return res.status(401).send(`
-  <h1>Access denied</h1>
-  <h3>Please login first</h3>
-  <a href="/login" style="
-    display:inline-block;
-    padding:10px 14px;
-    background:#333;
-    color:white;
-    border-radius:6px;
-  ">Login</a>
-`);
-
-   }
+      res.redirect('/login');
+}
 
    try {
       const decoded = jwt.verify(token, process.env.SECRET_KEY);

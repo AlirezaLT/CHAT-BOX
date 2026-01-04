@@ -9,7 +9,7 @@ const username = localStorage.getItem("username");
 
 
 sendBtn.addEventListener("click", (e) => {
-    e.preventDefault(); // جلوگیری از submit فرم
+    e.preventDefault(); 
     sendMessage();
 });
 
@@ -25,12 +25,11 @@ function sendMessage() {
     const message = messageInput.value.trim();
     if (!message) return;
 
-    // ارسال پیام به سرور
     socket.emit("chatMessage", { username, message });
     messageInput.value = "";
 }
 
-// دریافت پیام از سرور
+
 socket.on("message", ({ username: sender, message, self }) => {
     const msgDiv = document.createElement("div");
     msgDiv.classList.add("CHAT");
