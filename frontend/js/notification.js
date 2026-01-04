@@ -1,5 +1,4 @@
-// Simple, reusable notification utility
-// Usage: showSuccess('Saved!'); showError('Something went wrong'); showInfo('Loading...');
+
 function ensureContainer() {
   let container = document.getElementById('notification-container');
   if (!container) {
@@ -23,7 +22,6 @@ function showNotification(message, type = 'info', duration = 3000) {
   notification.className = `notification ${type}`;
   notification.innerHTML = `<span class="message">${escapeHTML(message)}</span> <button class="close-btn" aria-label="close">&times;</button>`;
 
-  // Remove with fade out
   const remove = () => {
     if (!notification.parentNode) return;
     notification.style.opacity = '0';
@@ -33,7 +31,7 @@ function showNotification(message, type = 'info', duration = 3000) {
 
   let removeTimeout = setTimeout(remove, duration);
 
-  // Pause timeout on hover
+
   notification.addEventListener('mouseenter', () => {
     clearTimeout(removeTimeout);
   });

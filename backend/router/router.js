@@ -6,7 +6,7 @@ import userController from "../controller/userController.js";
 import auth from "../middleware/auth.js";
 
 
-router.post('/',auth,chatController.sendMessage)
+
 router.get('/',auth,pageController.home)
 
 router.post('/login',userController.login)
