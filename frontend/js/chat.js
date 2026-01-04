@@ -1,20 +1,19 @@
 const socket = io();
 
-// المنت‌ها
 const chatBox = document.querySelector(".chat-display");
 const messageInput = document.getElementById("chat-sender");
 const sendBtn = document.querySelector(".send-b");
 
-// username از localStorage
-const username = localStorage.getItem("username") || "Anonymous";
 
-// ارسال پیام وقتی کاربر کلیک میکنه
+const username = localStorage.getItem("username");
+
+
 sendBtn.addEventListener("click", (e) => {
     e.preventDefault(); // جلوگیری از submit فرم
     sendMessage();
 });
 
-// ارسال پیام با Enter
+
 messageInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         e.preventDefault();
@@ -36,18 +35,16 @@ socket.on("message", ({ username: sender, message, self }) => {
     const msgDiv = document.createElement("div");
     msgDiv.classList.add("CHAT");
 
-    // اضافه کردن username در بالای پیام
+
     const senderDiv = document.createElement("div");
     senderDiv.classList.add("sender", "namem");
     senderDiv.textContent = sender;
     msgDiv.appendChild(senderDiv);
 
-    // متن پیام
     const textDiv = document.createElement("div");
     textDiv.textContent = message;
     msgDiv.appendChild(textDiv);
-
-    // قرار دادن پیام در کلاس درست
+    
     const wrapperDiv = document.createElement("div");
     wrapperDiv.classList.add("chat-message");
     wrapperDiv.classList.add(self ? "SENT" : "RECEIVED");
