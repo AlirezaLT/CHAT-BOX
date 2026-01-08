@@ -117,7 +117,9 @@ backdrop-filter: blur(15px);
 overflow-x: hidden;
 }
 
-
+.Joined{
+  color: rgb(0, 0, 70);
+}
 /***************** NAV *****************/
 .nav{
     padding: 5px;
