@@ -3,42 +3,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CHAT-BOX</title>
-    <link rel="stylesheet" type="text/css" href="../CSS/MAIN-CHAT-BOX.css" >
+    <link rel="stylesheet" type="text/css" href="../CSS/MAIN-CHAT-BOX.css">
 </head>
-
 <body>
     <main class="wrap">
-            <section class="main-chat">
-                <header class="header">
-                 <div class="logo"> </div>
-                   
-                 <h2 style="margin: 0; padding-top: 10px;">CHAT-BOX</h2>
-                </header>
 
-                <div class="user-info">
-                    <span class="user-name">guests</span>
-                </div>
+        <button class="menu-BTN" id="menuBTN">manu</button>
 
-                <div class="chat-display">
-                    <div class="CHAT RECEIVED">HI</div>
-                    <div class="CHAT SENT">HI</div>
-                </div>
-            
-                <footer>
-                    <form action="/" method="post" novalidate>
-                            <div class="input-box-control" >
-                                <input id="chat-sender" name="message" type="text" placeholder="Type a message..." class="chat-sender"/>
-                            
+        <div class="dropdown" id="dropdown">
+            <div class="dropdown-content"></div>
+        </div>
 
-                                <button class="send-b" type="submit" aria-label="send message">
-                                    <svg class="send-icon" viewbox="0 0 24 24" aria-hidden="true"><path d="M2 21l20-9L2 3v7l14 2-14 2z" /></svg>
-                                </button> 
-                            </div>
-                    </form>
-                </footer>
-            </section>
+        <section class="main-chat">
+            <header class="header">
+                <div class="logo"></div>
+                <h2 style="margin: 0; padding-top: 10px;">CHAT-BOX</h2>
+            </header>
+
+            <div class="chat-display"></div>
+
+            <footer>
+               <div class="input-box-control">
+                   <input id="chat-sender" name="message" type="text" placeholder="Type a message..." class="chat-sender" />
+                   <button class="send-b" type="button" aria-label="send message">
+                       <svg class="send-icon" viewBox="0 0 24 24" aria-hidden="true">
+                           <path d="M2 21l20-9L2 3v7l14 2-14 2z" />
+                       </svg>
+                   </button>
+               </div>
+            </footer>
+        </section>
     </main>
+
     <div id="notification-container"></div>
+
+    <script src="../js/DROPDOWN.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../js/chat.js"></script>
     <script src="../js/notification.js"></script>
 </body>
-</html> 
+</html>
+    

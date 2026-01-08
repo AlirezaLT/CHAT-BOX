@@ -37,8 +37,32 @@
     .chat-display{padding: 8px; gap: 6px;}
     .CHAT{max-width: 75%; font-size: 15px; padding: 8px 12px;}
     footer{padding: 8px;}
+    .nav a{
+        font-size: 13px;
+        
+    }
 }
+@media (max-width: 440px){
+    .nav{
+        padding: 3px;
+    }
+    .nav a{
+        font-size: 10px;
+    }
+@media (max-width: 400px){
+    .nav{
+        padding: 3px;
+        }
+    .nav a{
+            font-size: 9px;
+        }
+        .nav ul{
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
 
+}
 * {
     box-sizing: border-box;
 }
@@ -69,45 +93,6 @@ body{
     place-items: center;
 }
 
-.menu-BTN{
-    position: fixed;
-    top: 16px;
-    right: 16px;
-    font-size: 20px;
-    background: none;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    z-index: 1001;
-}
-
-.dropdown{
-    position: fixed;
-    top: 60px;
-    right: 16px;
-    width: 260px;
-    backdrop-filter: blur(14px);
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 16px;
-    box-shadow:  -5px 25px rgba(0, 0, 0, 0.4);
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
-    transition: 0.3s ease;
-    z-index: 1000;
-}
-
-.dropdown-content{
-    padding: 16px;
-    color: #fff;
-}
-
-.dropdown.active {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
 .main-chat{
     max-width: 490px;
     height: 620px;
@@ -132,6 +117,46 @@ backdrop-filter: blur(15px);
 overflow-x: hidden;
 }
 
+.Joined{
+  color: rgb(0, 0, 70);
+}
+/***************** NAV *****************/
+.nav{
+    padding: 5px;
+    background:rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nav ul {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;          
+    display: flex;             
+    flex-direction: row;     
+    justify-content: space-between; 
+    gap: 25px;      
+  }
+  .nav a {
+    font-size: 14px;
+    display: block;
+    padding: 10px 22px;
+    background: #2563eb;       
+    color: white;              
+    text-decoration: none;     
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background 0.2s ease;
+  }
+  
+  .nav a:hover {
+    background: #1e40af;      
+  }
+  
+/***************** NAV END *****************/
+
+
 .chat-display{
     flex: 1;
     padding: 12px;
@@ -141,124 +166,61 @@ overflow-x: hidden;
     gap: 8px;
     scroll-behavior: smooth; 
 }
-
-.chat-display::-webkit-scrollbar{
-    width: 8px;
-}
-
-.chat-display::-webkit-scrollbar-thumb{
-    border-radius: 10px;
-    background: rgba(0, 0, 0, 0.70);
-}
-
-.CHAT{
-    animation: SRmassages 0.35s ease-out both;
-    background: rgba(255, 255, 255, 0.15);
-    padding: 10px 14px;
-    border-radius: 15px;
-    color: #eee;
-    display: inline-block;
-    max-width: 100%;
-    width: fit-content;
-    word-wrap: break-word;
-    margin-top: 4px;
-}
-
-.chat-message{
+.form{
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    max-width: 60%;
-    align-items: flex-start;
-    margin-top: 7px;
-}
-
-.chat-message.RECEIVED{
-    align-self: flex-start;
-    align-items: flex-start;
-}
-
-
-.chat-message.SENT{
-    align-self: flex-end;
-    align-items: flex-end;
-}
-
-.chat-message.RECEIVED .CHAT{
-    background: rgba(0, 0, 0, 0.60);
-    backdrop-filter: blur(6px);
-}
-
-.chat-message.SENT .CHAT{
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.sender.namem{
-    font-size: 13px;
-    opacity: 0.85;
-    margin-bottom: 4px;
-    padding-left: 6px;
-    width: fit-content;
-    max-width: 100%;
-}
-
-footer{
-    padding: 10px;
-    background:rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(15px);
-}
-
-.input-box-control{
-    display: flex;
-    gap: 10px;
     align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
 }
+/***************** UserProfile *****************/
 
-.chat-sender{
-    flex: 1;
+
+.avatar input {
+    display: none;
+  }
+  
+  .avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid rgb(6, 6, 131);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  /***************** UserProfile end*****************/
+  label {
+    width: 100%;
+    display: block;
+    margin-bottom: 15px;
+    font-size: 14px;
+  }
+  
+  .inputs {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .s-button {
+    margin-top: 60px;
+    width: 100%;
     padding: 12px;
-    border-radius: 15px;
+    background: #4f46e5;
+    color: #fff;
     border: none;
-    outline: none;
-    color: #000000;
-    background:  rgba(255, 255, 255, 1.15);
-}
-
-.send-b{
-width: 47px;
-height: 47px;
-display: flex;
-align-items: center;
-justify-content: center;
-border: none;
-border-radius: 50%;
-background: linear-gradient(135deg, #ffffff, #dcdcff);
-color: #5b27f8;
-cursor: pointer;
-box-shadow: 0 3px rgba(0, 0, 0, 0.25),inset 0 0 0 rgba(255, 255, 255, 0.4);
-transition: transform 0.25s ease,box-shadow 0.25s ease, background 0.25s ease;
-}
-
-.send-b:hover{
-    transform: translateX(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
-}
-
-.send-b:hover .send-icon{
-    transform: translateX(4px);
-}
-
-.send-b:active{
-    transform: scale(0.95);
-}
-
-
-.send-icon{
-    width: 25px;
-    height: 25px;
-    fill: currentColor;
-    transition: transform 0.25s ease, filter 0.25s ease;
-}
-
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .s-button:hover {
+    opacity: .8;
+  }
 /* Notification styles */
 #notification-container {
   position: fixed;
