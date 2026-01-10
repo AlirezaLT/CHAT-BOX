@@ -20,6 +20,7 @@ app.use(cookieParser());
 
 app.use('/', router);
 
+//soket 
 io.on("connection", (socket) => {
     console.log("A user connected");
 
@@ -34,6 +35,8 @@ io.on("connection", (socket) => {
         console.log("a user disconnected");
     });
 });
+//
+
 server.listen(port, () => {
     console.log("Server is running on port " + port);
 });

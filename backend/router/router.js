@@ -15,4 +15,7 @@ router.get('/login',pageController.login)
 router.post('/signup',userController.signup)
 router.get('/signup',pageController.signup)
 
+router.get('/panel',pageController.panel)
+
+router.get('/about',pageController.about)
 export default router
