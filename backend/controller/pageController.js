@@ -13,6 +13,12 @@ const pageController ={
     },
         signup:(req,res)=>{
         res.sendFile(path.join(__dirname,'../../frontend','HTML','SignUp.html'))
+    },
+        about:(req,res)=>{
+        res.sendFile(path.join(__dirname,'../../frontend','HTML','AboutUS.html'))
+    },
+        panel:(req,res)=>{
+        res.sendFile(path.join(__dirname,'../../frontend','HTML','UserPanel.html'))
     }
 }
 

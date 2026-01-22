@@ -5,38 +5,44 @@
     <title>UserPanel</title>
     <link rel="stylesheet" type="text/css" href="../CSS/UserPanel.css">
 </head>
+
 <body>
     <main class="wrap">
         <section class="main-chat">
             <header class="header">
-                <h2 style="margin: 0; padding-top: 10px;">CHAT-BOX</h2>
+                <h2 id="header" style="margin: 0; padding-top: 10px;"></h2>
             </header>
             <nav class="nav">
                 <ul>
-                    <li><a href="#">Log Out</a></li>
-                    <li><a href="#">About US</a></li>
-                    <li><a href="#">ChatRoom</a></li>
+                    <li><a href="/user/logout">Log Out</a></li>
+                    <li><a href="/about">About US</a></li>
+                    <li><a href="/">ChatRoom</a></li>
                     <li><a href="#">Profile</a></li>
                   </ul>
             </nav>
             <div class="chat-display">
-                  <form class="form">
+                  <form class="form" method="post" action="/user/panel">
                     <label class="avatar">
                         <input type="file" accept="image/*">
                         <Span>Edit Profile</Span>
                       </label>
-                      <span class="Joined">Joined:</span>
-                    <label>
-                      Username
-                      <input type="text" value="Username" class="inputs">
-                    </label>
-                
+                      <div>
+                        <span class="Joined">Joined:</span>
+                        <span>&&/&&/&&</span>
+                      </div>
+                      
+                     <a id="showUsername"></a>
+                      <input type="text" name="userInput" placeholder="enter you're new username here" id="userInput" class="inputs">
+                    
                     <button type="submit" class="s-button">Save Changes</button>
                   </form>
+                  <div id="notification-container"></div>
             </div>
             
             
         </section>
     </main>
+    <script src="../js/notification.js"></script>
+    <script src="../js/panel.js"></script>
 </body>
 </html>

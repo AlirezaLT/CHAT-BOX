@@ -24,7 +24,6 @@ async function login(req, res, next) {
 
         const userArr = await usermodule.getUser(req.body.username)
         const user = userArr[0];
-
         if (!user) {
             
             if (req.xhr || (req.headers.accept && req.headers.accept.includes('application/json'))) {
@@ -48,8 +47,8 @@ async function login(req, res, next) {
 
             res.cookie('token', token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                maxAge: 24 * 60 * 60 * 1000
+                secure: process.env.NODE_ENV ,
+                maxAge: 48 * 60 * 60 * 1000
             });
 
             if (req.xhr || (req.headers.accept && req.headers.accept.includes('application/json'))) {
@@ -91,7 +90,7 @@ async function signup(req, res, next) {
             if (req.xhr || (req.headers.accept && req.headers.accept.includes('application/json'))) {
                 return res.status(400).json({ success: false, error: 'invalidInput' });
             }
-            return res.redirect('/signup?error=invalidInput');
+            
 
         }
 
@@ -102,7 +101,6 @@ async function signup(req, res, next) {
             if (req.xhr || (req.headers.accept && req.headers.accept.includes('application/json'))) {
                 return res.status(409).json({ success: false, error: 'UserAlreadyExists' });
             }
-            return res.redirect('/signup?error=UserAlreadyExists');
         }
 
         const hashpassword = await bcrypt.hash(req.body.password, 10)
@@ -118,15 +116,14 @@ async function signup(req, res, next) {
 
         res.cookie('token', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 24 * 60 * 60 * 1000
+            secure: process.env.NODE_ENV ,
+            maxAge: 48 * 60 * 60 * 1000
         });
 
         if (req.xhr || (req.headers.accept && req.headers.accept.includes('application/json'))) {
             return res.json({ success: true, username: newUser.username });
         }
 
-        res.redirect('/signup?success=' + encodeURIComponent('UserRegistered'));
     } catch (error) {
         console.log(error)
     }
