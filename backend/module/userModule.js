@@ -18,7 +18,7 @@ class userModule {
     }
 
     static getUser = async(username)=>{
-        const [result] = await db.query(`select * from chat.users     where username = ?`,[username])
+        const [result] = await db.query(`select * from chat.users where username = ?`,[username])
         return result
     }
 }

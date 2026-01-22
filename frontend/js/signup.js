@@ -1,4 +1,5 @@
-// ساده و قابل فهم برای مبتدی‌ها
+// developed by Alireza-Hashamdar
+
 const form = document.querySelector('form');
 const username = form.querySelector('input[name="username"]');
 const password = document.getElementById('password');
@@ -31,7 +32,6 @@ form.addEventListener('submit', async function (e) {
   };
 
   try {
-    console.log('signup request', body);
     const res = await fetch('/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },

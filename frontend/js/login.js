@@ -1,4 +1,5 @@
-// ساده و قابل فهم برای مبتدی‌ها
+// developed by Alireza-Hashamdar
+
 const form = document.querySelector('form');
 if (form) {
   const username = form.querySelector('input[name="username"]');
@@ -40,7 +41,7 @@ if (form) {
       showError(msg);
 
     } catch (err) {
-      showError('خطا در شبکه. دوباره تلاش کنید.');
+      showError('internal error .try again');
     } finally {
       if (submitBtn) submitBtn.disabled = false;
     }

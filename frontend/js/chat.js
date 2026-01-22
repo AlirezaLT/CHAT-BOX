@@ -1,3 +1,5 @@
+// coded by Alireza-Hashamdar
+
 const socket = io();
 
 const chatBox = document.querySelector(".chat-display");
