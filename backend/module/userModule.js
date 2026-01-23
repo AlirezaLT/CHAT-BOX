@@ -12,13 +12,13 @@ class userModule {
             numberingSystem: 'latn' 
         }).format(new Date());
         
-        const [result] = await db.query(`INSERT INTO chat.users (id, username, password, created_at) 
+        const [result] = await db.query(`INSERT INTO users (id, username, password, created_at) 
             VALUES (uuid(), ?, ?, ?)`, [username, password, shamsiDate]);
         return result;
     }
 
     static getUser = async(username)=>{
-        const [result] = await db.query(`select * from chat.users where username = ?`,[username])
+        const [result] = await db.query(`select * from users where username = ?`,[username])
         return result
     }
 }

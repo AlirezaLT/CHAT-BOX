@@ -3,6 +3,9 @@ import jwt from "jsonwebtoken"
 import joi from "joi"
 import usermodule from "../module/userModule.js"
 
+import dotenv from "dotenv"
+import path from "path"
+dotenv.config({ path: path.resolve("./.env") });
 
 async function login(req, res, next) {
     try {
