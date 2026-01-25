@@ -6,84 +6,160 @@
 /*********** Body css ***********/
 
 body{
-    background:url(../photos/BG\ Picture.jpg) no-repeat fixed center/cover;
-    width: 100%;
-    height: 600px;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #1f2933, #020617);
+      color: #e5e7eb;
+      overflow: hidden;
+     width: 100%;
+      height: 600px;
 }
+.bg-orbs {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: -1;
+  }
+
+  .orb {
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    filter: blur(4px);
+    opacity: 0.6;
+    animation: float 18s ease-in-out infinite;
+    mix-blend-mode: screen;
+  }
+
+  .orb:nth-child(1) {
+    background: #6366f1;
+    top: -60px;
+    left: -40px;
+  }
+
+  .orb:nth-child(2) {
+    background: #ec4899;
+    bottom: -80px;
+    right: -40px;
+    animation-delay: 3s;
+  }
+
+  .orb:nth-child(3) {
+    background: #22c55e;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: 6s;
+  }
+  @keyframes float {
+    0%   { transform: translateY(0) scale(1); }
+    50%  { transform: translateY(-40px) scale(1.05); }
+    100% { transform: translateY(0) scale(1); }
+  }
+
 p{
     font-size: 17px;
 }
 
 /*********** login-box ***********/
 
-.login-box{
-    background-color: rgba(0, 0, 0, 0.5);
-    display:flex ;
-    flex-direction: column;
-    align-items: center;
-    width: 300px;
-    height: 420px;
-    border-radius: 25px;
-}
-.login-box{
-    border: 3px solid transparent;
-      background:
-        linear-gradient(#111, #0b063d) padding-box,
-        linear-gradient(
-          135deg,
-          #4027f8,
-          #7e9eff,
-          #4027f8
-        ) border-box;
-}
+.login-box {
+    position: relative;
+    background: rgba(15, 23, 42, 0.9);
+    border-radius: 24px;
+    padding: 32px 40px;
+    height: 350px;
+    box-shadow:
+      0 18px 45px rgba(15, 23, 42, 0.85),
+      0 0 0 1px rgba(148, 163, 184, 0.15);
+    backdrop-filter: blur(18px);
+    overflow: hidden;
+  }
+
+  .login-box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 0 0, rgba(96, 165, 250, 0.25), transparent 55%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+  }
+
+  .login-box:hover::before {
+    opacity: 1;
+  }
+  .glow-ring {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    top: -120px;
+    left: -80px;
+    transform: rotate(-12deg);
+    pointer-events: none;
+  }
+
+  .glow-ring::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    border: 1px solid transparent;
+    border-top-color: rgba(129, 140, 248, 0.7);
+    filter: blur(1px);
+    animation: rotate 18s linear infinite;
+  }
+
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
 /*********** Inputs ***********/
 .box-inputs{
     display: flex;
     flex-direction: column;
    height: 300px;
-    gap: 50px;
+    gap: 28px;
    align-items: center;
    margin: 25px 0px;
 }
-.inputs{
-    background-color: rgba(0, 0, 0, 0.0);
-    border: none;
-    border-bottom: 1px solid rgb(0, 238, 255);
-    width: 250px;
-    padding: 5px;
-    color: white;
-    font-size: 15px;
-    transition: width 0.4s ease-in-out;
-}
+.inputs {
+    width: 100%;
+    padding: 10px 11px;
+    padding-inline-end: 36px;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(55, 65, 81, 0.85);
+    color: #e5e7eb;
+    font-size: 0.9rem;
+    outline: none;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease,
+      transform 0.12s ease;
+  }
 
-input::placeholder{
-    color: rgb(0, 238, 255);
-    opacity: 1;
-    font-size: 17px;
-    font-weight: bold;
-}
-input:hover::placeholder{
-    color: rgb(0, 119, 255) ;
-}
-input:focus::placeholder{
-    color: rgb(0, 119, 255) ;
-}
-.inputs:focus{
-    outline: none;
-    border: none;
-    border-bottom: 2px solid rgb(0, 119, 255);
-    width: 100%;
-}
-.inputs:hover{
-    outline: none;
-    border: none;
-    border-bottom: 2px solid rgb(0, 119, 255);
-    width: 100%;
-}
+  .inputs::placeholder {
+    color: #6b7280;
+    font-size: 0.8rem;
+  }
+
+  .inputs:focus {
+    border-color: #6366f1;
+    box-shadow:
+      0 0 0 1px rgba(129, 140, 248, 0.7),
+      0 12px 30px rgba(30, 64, 175, 0.35);
+    background: rgba(15, 23, 42, 0.95);
+    transform: translateY(-1px);
+  }
 .Sign-up{
     text-align: center;
 }
