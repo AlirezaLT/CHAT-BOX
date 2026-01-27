@@ -33,7 +33,7 @@ import { time } from "console";
             
             socket.emit("message", { username, message, self: true ,timestamp});
         
-            socket.broadcast.emit("message", { username, message, self: false });
+            socket.broadcast.emit("message", { username, message, self: false,timestamp });
         });
 
         socket.on("disconnect", () => {
