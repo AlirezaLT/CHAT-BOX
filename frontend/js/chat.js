@@ -32,14 +32,14 @@ function sendMessage() {
 }
 
 
-socket.on("message", ({ username: sender, message, self }) => {
+socket.on("message", ({ username: sender, message, self,timestamp }) => {
     const msgDiv = document.createElement("div");
     msgDiv.classList.add("CHAT");
 
 
     const senderDiv = document.createElement("div");
     senderDiv.classList.add("sender", "namem");
-    senderDiv.textContent = sender;
+    senderDiv.textContent = `${sender } | ${timestamp}`;
     msgDiv.appendChild(senderDiv);
 
     const textDiv = document.createElement("div");

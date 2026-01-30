@@ -54,7 +54,6 @@ form.addEventListener('submit', async function (e) {
     showError(msg);
 
   } catch (err) {
-    console.log('signup fetch failed:', err);
     showError('خطا در شبکه. دوباره تلاش کنید.');
   } finally {
     if (submitBtn) submitBtn.disabled = false;

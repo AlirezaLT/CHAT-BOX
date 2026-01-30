@@ -5,10 +5,26 @@ const submitBtn = form.querySelector('button[type="submit"]');
 const header = document.getElementById('header')
 const savedUsername = localStorage.getItem("username");
 const userInput = form.querySelector('#userInput');
+const showDate = document.getElementById('showDate');
 
 header.innerHTML = `HI ${savedUsername} ❤️`
 
+async function fetchDate(params) {
+  try {
+    const res = await fetch('/user/api/fetch/date', {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+    });
 
+    const data = await res.json();
+    if (data.success) {
+      showDate.innerText = data.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+fetchDate();
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -26,27 +42,29 @@ form.addEventListener('submit', async (e) => {
       }
       submitBtn.disabled = true;
 
-      const res =await fetch('/user/panel', {
+      const res = await fetch('/user/panel', {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
-        body:JSON.stringify({ username: newUsername })
+        body: JSON.stringify({ username: newUsername })
 
-      }); 
+      });
 
       const data = await res.json();
       if (data.success) {
         localStorage.setItem('username', newUsername);
-        showSuccess('Username changed successfull y');
-      }else if(data.error === 'userAlreadyExists'){
-         showError('This username is already taken');   
+        showSuccess('Username changed successfully');
+      } else if (data.error === 'userAlreadyExists') {
+        showError('This username is already taken');
       }
     }
-      
-    } catch (err) {
-      console.error(err);
-      showError('Internal error, try again');
 
-    } finally {
-      submitBtn.disabled = false;
-    }
-  });
+  } catch (error) {
+    console.log(error);
+    showError('Internal error, try again');
+
+  } finally {
+    submitBtn.disabled = false;
+  }
+});
+
+
