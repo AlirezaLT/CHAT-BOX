@@ -1,7 +1,7 @@
 import db from "../utilities/db.js"
 
 
-class userModule {
+class usermodel {
     static insertUser = async (username, password) => {
 
         const shamsiDate = new Intl.DateTimeFormat('fa-IR', {
@@ -21,6 +21,16 @@ class userModule {
         const [result] = await db.query(`select * from users where username = ?`,[username])
         return result
     }
-}
 
-export default userModule
+    static updateUsername = async(userId , username)=>{
+        const [result] = await db.query(`update users set username = ? where id = ? `,[username, userId])
+        return result
+    }
+
+    static fetchDate = async(userId)=>{
+        const [result] = await db.query(`select created_at from users where id = ?`,[userId])
+        return result;
+    }
+    }
+
+export default usermodel
