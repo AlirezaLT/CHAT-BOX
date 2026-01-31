@@ -1,8 +1,11 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import joi from "joi"
-import usermodule from "../module/userModule.js"
+import usermodel from "../models/userModel.js"
 
+import dotenv from "dotenv"
+import path from "path"
+dotenv.config({ path: path.resolve("./.env") });
 
 async function login(req, res, next) {
     try {
@@ -22,9 +25,8 @@ async function login(req, res, next) {
 
         }
 
-        const userArr = await usermodule.getUser(req.body.username)
+        const userArr = await usermodel.getUser(req.body.username)
         const user = userArr[0];
-
         if (!user) {
             
             if (req.xhr || (req.headers.accept && req.headers.accept.includes('application/json'))) {
@@ -44,16 +46,18 @@ async function login(req, res, next) {
 
 
         if (validpassword && user) {
-            const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY);
+            const token = jwt.sign({ id: user.id ,username: user.username },
+                 process.env.SECRET_KEY,
+                {expiresIn: '7d'});
 
             res.cookie('token', token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production',
-                maxAge: 24 * 60 * 60 * 1000
+                secure: process.env.NODE_ENV ,
+                maxAge: 7 * 24 * 60 * 60 * 1000
             });
 
             if (req.xhr || (req.headers.accept && req.headers.accept.includes('application/json'))) {
-                return res.json({ success: true, username: user.username });
+                return res.json({ success: true, token: token });
             }
 
             res.redirect('/');
@@ -91,42 +95,43 @@ async function signup(req, res, next) {
             if (req.xhr || (req.headers.accept && req.headers.accept.includes('application/json'))) {
                 return res.status(400).json({ success: false, error: 'invalidInput' });
             }
-            return res.redirect('/signup?error=invalidInput');
+            
 
         }
 
-        const userArr = await usermodule.getUser(req.body.username)
+        const userArr = await usermodel.getUser(req.body.username)
         const user = userArr[0];
 
         if (user) {
             if (req.xhr || (req.headers.accept && req.headers.accept.includes('application/json'))) {
                 return res.status(409).json({ success: false, error: 'UserAlreadyExists' });
             }
-            return res.redirect('/signup?error=UserAlreadyExists');
         }
 
         const hashpassword = await bcrypt.hash(req.body.password, 10)
-        await usermodule.insertUser(
+        await usermodel.insertUser(
             req.body.username,
             hashpassword
         );
 
-        const newUserArr = await usermodule.getUser(req.body.username);
+        const newUserArr = await usermodel.getUser(req.body.username);
         const newUser = newUserArr[0];
 
-        const token = jwt.sign({ id: newUser.id }, process.env.SECRET_KEY);
+        const token = jwt.sign(
+            { id: newUser.id ,username: newUser.username},
+             process.env.SECRET_KEY,
+            {expiresIn: '7d'});
 
         res.cookie('token', token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 24 * 60 * 60 * 1000
+            secure: process.env.NODE_ENV ,
+            maxAge: 7 * 24 * 60 * 60 * 1000
         });
 
         if (req.xhr || (req.headers.accept && req.headers.accept.includes('application/json'))) {
-            return res.json({ success: true, username: newUser.username });
+            return res.json({ success: true, toke:token });
         }
 
-        res.redirect('/signup?success=' + encodeURIComponent('UserRegistered'));
     } catch (error) {
         console.log(error)
     }

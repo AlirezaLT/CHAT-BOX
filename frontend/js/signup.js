@@ -1,4 +1,5 @@
-// ساده و قابل فهم برای مبتدی‌ها
+import { TokenExpiredError } from "jsonwebtoken";
+
 const form = document.querySelector('form');
 const username = form.querySelector('input[name="username"]');
 const password = document.getElementById('password');
@@ -31,20 +32,17 @@ form.addEventListener('submit', async function (e) {
   };
 
   try {
-    console.log('signup request', body);
     const res = await fetch('/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify(body)
     });
 
-    let data = null;
-    try { data = await res.json(); } catch (err) {
-      try { const text = await res.text(); console.log('signup response text:', text); } catch (tErr) { }
-    }
+
+     data = await res.json() 
 
     if (res.ok && data && data.success) {
-      try { localStorage.setItem('username', data.username); } catch (e) { }
+      try { localStorage.setItem('token',data.token); } catch (e) { }
       showSuccess('ثبت‌نام با موفقیت انجام شد');
       setTimeout(function () { location.href = '/'; }, 600);
       return;
@@ -54,7 +52,6 @@ form.addEventListener('submit', async function (e) {
     showError(msg);
 
   } catch (err) {
-    console.log('signup fetch failed:', err);
     showError('خطا در شبکه. دوباره تلاش کنید.');
   } finally {
     if (submitBtn) submitBtn.disabled = false;

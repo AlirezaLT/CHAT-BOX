@@ -1,4 +1,5 @@
-// ساده و قابل فهم برای مبتدی‌ها
+// developed by Alireza-Hashamdar
+
 const form = document.querySelector('form');
 if (form) {
   const username = form.querySelector('input[name="username"]');
@@ -26,11 +27,10 @@ if (form) {
         body: JSON.stringify(body)
       });
 
-      let data = null;
-      try { data = await res.json(); } catch (err) { }
+      let data = await res.json(); 
 
       if (res.ok && data && data.success) {
-        try { localStorage.setItem('username', data.username); } catch (e) { }
+        try { localStorage.setItem('token', data.token); } catch (e) { }
         showSuccess('ورود با موفقیت انجام شد');
         setTimeout(function () { location.href = '/'; }, 500);
         return;
@@ -40,7 +40,7 @@ if (form) {
       showError(msg);
 
     } catch (err) {
-      showError('خطا در شبکه. دوباره تلاش کنید.');
+      showError('internal error .try again');
     } finally {
       if (submitBtn) submitBtn.disabled = false;
     }
