@@ -27,11 +27,10 @@ if (form) {
         body: JSON.stringify(body)
       });
 
-      let data = null;
-      try { data = await res.json(); } catch (err) { }
+      let data = await res.json(); 
 
       if (res.ok && data && data.success) {
-        try { localStorage.setItem('username', data.username); } catch (e) { }
+        try { localStorage.setItem('token', data.token); } catch (e) { }
         showSuccess('ورود با موفقیت انجام شد');
         setTimeout(function () { location.href = '/'; }, 500);
         return;

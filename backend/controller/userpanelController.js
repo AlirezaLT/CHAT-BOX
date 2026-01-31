@@ -4,9 +4,8 @@ import Joi from "joi";
 
 async function userDate(req,res) {
     try {
-        const token = req.cookies.token;
-        const decoded = jwt.verify(token, process.env.SECRET_KEY);
-        const userId = decoded.id;
+        const userId = req.user.id
+        
         const joinedDateArr = await usermodel.fetchDate(userId);
         const joinedDate = joinedDateArr[0].created_at;
          res.json({ success: true, data: joinedDate });
