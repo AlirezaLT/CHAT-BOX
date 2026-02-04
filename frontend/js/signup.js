@@ -1,4 +1,4 @@
-// developed by Alireza-Hashamdar
+import { TokenExpiredError } from "jsonwebtoken";
 
 const form = document.querySelector('form');
 const username = form.querySelector('input[name="username"]');
@@ -38,13 +38,11 @@ form.addEventListener('submit', async function (e) {
       body: JSON.stringify(body)
     });
 
-    let data = null;
-    try { data = await res.json(); } catch (err) {
-      try { const text = await res.text(); console.log('signup response text:', text); } catch (tErr) { }
-    }
+
+     data = await res.json() 
 
     if (res.ok && data && data.success) {
-      try { localStorage.setItem('username', data.username); } catch (e) { }
+      try { localStorage.setItem('token',data.token); } catch (e) { }
       showSuccess('ثبت‌نام با موفقیت انجام شد');
       setTimeout(function () { location.href = '/'; }, 600);
       return;

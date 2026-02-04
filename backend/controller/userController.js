@@ -46,7 +46,7 @@ async function login(req, res, next) {
 
 
         if (validpassword && user) {
-            const token = jwt.sign({ id: user.id },
+            const token = jwt.sign({ id: user.id ,username: user.username },
                  process.env.SECRET_KEY,
                 {expiresIn: '7d'});
 
@@ -57,7 +57,7 @@ async function login(req, res, next) {
             });
 
             if (req.xhr || (req.headers.accept && req.headers.accept.includes('application/json'))) {
-                return res.json({ success: true, username: user.username });
+                return res.json({ success: true, token: token });
             }
 
             res.redirect('/');
@@ -117,7 +117,8 @@ async function signup(req, res, next) {
         const newUserArr = await usermodel.getUser(req.body.username);
         const newUser = newUserArr[0];
 
-        const token = jwt.sign({ id: newUser.id },
+        const token = jwt.sign(
+            { id: newUser.id ,username: newUser.username},
              process.env.SECRET_KEY,
             {expiresIn: '7d'});
 
@@ -128,7 +129,7 @@ async function signup(req, res, next) {
         });
 
         if (req.xhr || (req.headers.accept && req.headers.accept.includes('application/json'))) {
-            return res.json({ success: true, username: newUser.username });
+            return res.json({ success: true, toke:token });
         }
 
     } catch (error) {

@@ -15,6 +15,8 @@
 
     const port = process.env.PORT || 3000;
 
+    import chatController from "./backend/controller/chatController.js";
+
     app.use(express.static(path.join(__dirname, "/frontend")));
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
@@ -25,22 +27,7 @@
     app.use('/user', userRouter)
 
     io.on("connection", (socket) => {
-        console.log("A user connected");
-
-        socket.on("chatMessage", ({ username, message }) => {
-            // date setting
-            const time = new Date();
-            const options = { hour: 'numeric', minute: 'numeric', hour12: true };
-            const timestamp = time.toLocaleString('fa-IR',options)
-            
-            socket.emit("message", { username, message, self: true ,timestamp});
-        
-            socket.broadcast.emit("message", { username, message, self: false,timestamp });
-        });
-
-        socket.on("disconnect", () => {
-            console.log("a user disconnected");
-        });
+        chatController.chat(io,socket)
     });
 
 
