@@ -1,56 +1,90 @@
-    const socket = io();
+const chatBox = document.querySelector(".chat-display");
+const messageInput = document.getElementById("chat-sender");
+const sendBtn = document.querySelector(".send-b");
 
-    const chatBox = document.querySelector(".chat-display");
-    const messageInput = document.getElementById("chat-sender");
-    const sendBtn = document.querySelector(".send-b");
+const token = localStorage.getItem("token");
+
+let currentRoom = "public";
+let currentUser = null; 
+
+const socket = io();
+
+window.addEventListener("load", () => {
+    socket.emit("joinRoom", { token, roomId: currentRoom });
+    getMessage();
+});
+
+function renderMessage(username, message, timestamp, self) {
+    const wrapper = document.createElement("div");
+    wrapper.className = `chat-message ${self ? "SENT" : "RECEIVED"}`;
+
+    wrapper.innerHTML = `
+        <div class="CHAT">
+            <div class="sender namem">${username} | ${timestamp}</div>
+            <div>${message}</div>
+        </div>
+    `;
+
+    chatBox.appendChild(wrapper);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
 
 
-    const token = localStorage.getItem("token");
+async function getMessage() {
+    try {
+        const res = await fetch('/api/fetch/message', { credentials: 'include' });
+        const data = await res.json();
 
+        if (data.success) {
+           
+            if (data.currentUser) {
+                currentUser = data.currentUser;
+            }
 
-    sendBtn.addEventListener("click", (e) => {
-        e.preventDefault(); 
-        sendMessage();
-    });
-
-
-    messageInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-            e.preventDefault();
-            sendMessage();
+            data.messages.forEach(msg => {
+             
+                const isSelf = data.currentUser && msg.sender_id === data.currentUser.id;
+                renderMessage(msg.username, msg.message, msg.created_at, isSelf);
+            });
         }
-    });
-
-    function sendMessage() {
-        const message = messageInput.value.trim();
-        if (!message) return;
-
-        socket.emit("chatMessage", { token, message });
-        messageInput.value = "";
+    } catch (err) {
+        console.error("Error fetching messages:", err);
     }
+}
 
 
-    socket.on("message", ({ username: sender, message, self,timestamp }) => {
-        const msgDiv = document.createElement("div");
-        msgDiv.classList.add("CHAT");
+function sendMessage() {
+    const message = messageInput.value.trim();
+    if (!message) return;
+
+    socket.emit("chatMessage", { message });
+    messageInput.value = "";
+}
 
 
-        const senderDiv = document.createElement("div");
-        senderDiv.classList.add("sender", "namem");
-        senderDiv.textContent = `${sender } | ${timestamp}`;
-        msgDiv.appendChild(senderDiv);
-        
-        const textDiv = document.createElement("div");
-        textDiv.textContent = message;
-        msgDiv.appendChild(textDiv);
-        
-        const wrapperDiv = document.createElement("div");
-        wrapperDiv.classList.add("chat-message");
-        wrapperDiv.classList.add(self ? "SENT" : "RECEIVED");
+socket.on("message", ({ username, message, timestamp, userId, self }) => {
+    
+    const isSelf = currentUser && userId === currentUser.id;
+    renderMessage(username, message, timestamp, isSelf);
+});
 
-        wrapperDiv.appendChild(msgDiv);
-        chatBox.appendChild(wrapperDiv);
+socket.on("joinRoomSuccess", ({ username, roomId }) => {
+    console.log(`Joined room: ${roomId} as ${username}`);
+});
+
+sendBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    sendMessage();
+});
 
 
-        chatBox.scrollTop = chatBox.scrollHeight;
-    });
+messageInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        sendMessage();
+    }
+});
+
+socket.on("messageError", (msg) => {
+    console.log("Message error:", msg);
+});

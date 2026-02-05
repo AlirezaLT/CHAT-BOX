@@ -51,7 +51,8 @@ form.addEventListener('submit', async (e) => {
 
       const data = await res.json();
       if (data.success) {
-        localStorage.setItem('username', newUsername);
+        localStorage.removeItem('token');
+        localStorage.setItem('token', data.data.token);
         showSuccess('Username changed successfully');
       } else if (data.error === 'userAlreadyExists') {
         showError('This username is already taken');
