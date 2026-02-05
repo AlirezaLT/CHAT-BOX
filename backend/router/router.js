@@ -1,9 +1,8 @@
 import express from "express"
 import pageController from "../controller/pageController.js"
-const router = express.Router();
 import userController from "../controller/userController.js";
 import auth from "../middleware/auth.js";
-
+const router = express.Router();
 
 
 router.get('/',auth,pageController.home)

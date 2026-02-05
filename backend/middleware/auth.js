@@ -5,6 +5,7 @@ function auth(req, res, next) {
    const token = req.cookies.token;
 
    if (!token) {
+      res.redirect('/login?error=pleaseLoginFirst')
       res.redirect('/login');
 }
 

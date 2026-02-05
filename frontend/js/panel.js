@@ -9,7 +9,7 @@ const showDate = document.getElementById('showDate');
 
 header.innerHTML = `HI ${savedUsername} ❤️`
 
-async function fetchDate(params) {
+async function fetchDate() {
   try {
     const res = await fetch('/user/api/fetch/date', {
       method: "POST",
