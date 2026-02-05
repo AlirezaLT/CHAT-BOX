@@ -32,6 +32,7 @@
   }
 }
 
+
 @media (max-width: 520px){
     .main-chat{min-height: 100vh; max-width: 100%; border-radius: 0;}
     .chat-display{padding: 8px; gap: 6px;}
@@ -54,17 +55,25 @@ html, body{
 
 body{
     overflow-y: hidden;
-    background-color: #0b0b0f;
-    background:
-        radial-gradient(
-        circle at top,
-        rgba(64, 0, 255, 0.15),
-        transparent 50%
-    ),
-    #0b0b0f;
 }
 
+#bg-canvas{
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: -1;
+    background: #0b0b0b;
+}
 
+.bg-orb{
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.6;
+    will-change: transform;
+}
 
 .wrap{
     height: 100dvh;
