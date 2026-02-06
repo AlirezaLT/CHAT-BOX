@@ -220,6 +220,12 @@ overflow-x: hidden;
     justify-content: center;
     cursor: pointer;
   }
+
+  .avatar:hover{
+    border: 3px solid rgb(231, 190, 4);
+    width: 125px;
+    height: 125px;
+  }
   /***************** UserProfile end*****************/
   label {
     width: 100%;
