@@ -1,18 +1,41 @@
-// developed by Alireza-Hashamdar
-
 const form = document.querySelector('form');
 const submitBtn = form.querySelector('button[type="submit"]');
 const header = document.getElementById('header')
-const savedUsername = localStorage.getItem("username");
 const userInput = form.querySelector('#userInput');
 const showDate = document.getElementById('showDate');
 
-header.innerHTML = `HI ${savedUsername} ❤️`
+
+
+async function fetchName() {
+  
+    const res = await fetch('/user/api/fetch/username', {
+      method:"GET",
+      headers: { 'Content-Type': 'application/json' },
+    });
+    if(!res.ok){
+      showError('SERVER ERROR')
+    }
+    
+    return res.json();
+  
+  
+}
+async function showName() {
+  try{  
+  const data = await fetchName()
+    if(data.success){
+      header.innerHTML = `HI ${data.data} ❤️`
+    }
+
+  } catch (error) {
+    console.log(error)
+   }
+}
 
 async function fetchDate() {
   try {
     const res = await fetch('/user/api/fetch/date', {
-      method: "POST",
+      method: "GET",
       headers: { 'Content-Type': 'application/json' },
     });
 
@@ -24,7 +47,10 @@ async function fetchDate() {
     console.log(error);
   }
 }
+
+showName();
 fetchDate();
+
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -34,7 +60,8 @@ form.addEventListener('submit', async (e) => {
       showInfo('Nothing changed');
       return;
     }
-    if (userInput.value !== savedUsername) {
+    const fetchUsername = await fetchName();
+    if (userInput.value !== fetchUsername.data) {
       const check = prompt('are you sure?\n(yes,no)')
       if (check !== 'yes') {
         showInfo('Nothing changed');
