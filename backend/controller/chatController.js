@@ -66,7 +66,6 @@ async function getMessage(req, res) {
         const roomId = req.query.roomId || "public";
         const messages = await chatModel.getMessage(roomId);
 
-        // اضافه کردن self به هر پیام
         const formattedMessages = messages.map(msg => ({
             username: msg.username,
             message: msg.message,
