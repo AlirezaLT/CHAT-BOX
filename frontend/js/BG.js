@@ -50,7 +50,7 @@ for (let i= 0; i < ORB_COUNT; i++) {
 
         const distance = Math.sqrt(dx * dx + dy * dy);
 
-        const influence = Math.max(0, 1 - distance / 400);
+        const influence = Math.max(0, 1 - distance / 500);
             const force = influence * influence;
 
         o.x += dx * force * 0.12;
