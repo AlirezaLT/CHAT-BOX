@@ -3,7 +3,7 @@ import chatModel from "../models/chatModel.js";
 
 function chat(io, socket) {
 
-    // وقتی کاربر وارد روم میشه (پابلیک یا خصوصی)
+    
     socket.on("joinRoom", ({ token, roomId }) => {
         try {
             const user = jwt.verify(token, process.env.SECRET_KEY);
@@ -23,7 +23,7 @@ function chat(io, socket) {
     });
 
 
-    socket.on("chatMessage", async ({ message }) => {
+    socket.on("chatMessage", async ({ message, roomId }) => {
         try {
           
             if (!socket.username || !socket.roomId) {
@@ -33,15 +33,15 @@ function chat(io, socket) {
 
             const username = socket.username;
             const userId = socket.userId;
-            const roomId = socket.roomId;
+            
+            const actualRoomId = roomId || socket.roomId;
 
             const time = new Date();
             const timestamp = time.toLocaleString('fa-IR', { hour: '2-digit', minute: '2-digit' });
 
-            await chatModel.saveMessage(userId, username, roomId, message, timestamp);
+            await chatModel.saveMessage(userId, username, actualRoomId, message, timestamp);
 
-            
-            io.to(roomId).emit("message", { username, message, timestamp, userId, self: false });
+            io.to(actualRoomId).emit("message", { username, message, timestamp, userId, self: false });
 
         } catch (err) {
             console.log("chatMessage error:", err.message);
@@ -54,7 +54,7 @@ function chat(io, socket) {
     });
 }
 
-// پابلیک یا روم مشخص
+// دریافت پیام‌های یک روم مشخص
 async function getMessage(req, res) {
     try {
         const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
@@ -63,9 +63,11 @@ async function getMessage(req, res) {
         const user = jwt.verify(token, process.env.SECRET_KEY);
         const userId = user.id;
 
+        // دریافت roomId از query parameter
         const roomId = req.query.roomId || "public";
         const messages = await chatModel.getMessage(roomId);
 
+        // اضافه کردن self به هر پیام
         const formattedMessages = messages.map(msg => ({
             username: msg.username,
             message: msg.message,

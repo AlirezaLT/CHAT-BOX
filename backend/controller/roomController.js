@@ -1,6 +1,6 @@
 import roomModel from "../models/roomModel.js";
 
-async function getroom(req,res){
+async function getRoom(req,res){
     try{
         const roomId = req.params;
         const room = await roomModel.getRoom(roomId);
@@ -23,9 +23,31 @@ async function getAllRooms (req,res){
     }
 }
 
-const roomsController={
-    getAllRooms,
-    getroom
+async function createRoom(req, res) {
+    try {
+        const { roomName } = req.body;
+        const userId = req.user.id;
+
+        if (!roomName || roomName.trim() === '') {
+            return res.status(400).json({ success: false, error: 'Room name is required' });
+        }
+
+        // تولید roomId تصادفی
+        const roomId = 'room_' + Date.now();
+
+        await roomModel.createRoom(roomId, roomName, userId);
+
+        res.json({ success: true, roomId, roomName, message: 'Room created successfully' });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ success: false, error: err.message });
+    }
 }
 
-export default roomsController;
+const roomController={
+    getAllRooms,
+    getRoom,
+    createRoom
+}
+
+export default roomController;

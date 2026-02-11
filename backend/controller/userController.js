@@ -129,7 +129,7 @@ async function signup(req, res, next) {
         });
 
         if (req.xhr || (req.headers.accept && req.headers.accept.includes('application/json'))) {
-            return res.json({ success: true, toke:token });
+            return res.json({ success: true, token:token });
         }
 
     } catch (error) {

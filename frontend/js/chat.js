@@ -4,14 +4,26 @@ const sendBtn = document.querySelector(".send-b");
 
 const token = localStorage.getItem("token");
 
-let currentRoom = "public";
-let currentUser = null; 
+// اگر توکن نیست، redirect کن به login
+if (!token) {
+    window.location.href = '/login';
+}
+
+// استخراج roomId از URL
+function getRoomIdFromUrl() {
+    const path = window.location.pathname;
+    const match = path.match(/\/room\/(.+)/);
+    return match ? match[1] : "public";
+}
+
+let currentRoom = getRoomIdFromUrl();
+let currentUser = null;
 
 const socket = io();
 
-window.addEventListener("load", () => {
+window.addEventListener("load", async () => {
     socket.emit("joinRoom", { token, roomId: currentRoom });
-    getMessage();
+    await getMessage();
 });
 
 function renderMessage(username, message, timestamp, self) {
@@ -29,42 +41,45 @@ function renderMessage(username, message, timestamp, self) {
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-
 async function getMessage() {
     try {
-        const res = await fetch('/api/fetch/message', { credentials: 'include' });
+        const res = await fetch(`/api/fetch/message?roomId=${currentRoom}`, {
+            credentials: 'include'
+        });
+
         const data = await res.json();
 
         if (data.success) {
-           
+
+            chatBox.innerHTML = "";
+
             if (data.currentUser) {
                 currentUser = data.currentUser;
             }
 
             data.messages.forEach(msg => {
-             
-                const isSelf = data.currentUser && msg.sender_id === data.currentUser.id;
+                const isSelf = currentUser && msg.sender_id === currentUser.id;
                 renderMessage(msg.username, msg.message, msg.created_at, isSelf);
             });
         }
+
     } catch (err) {
         console.error("Error fetching messages:", err);
     }
 }
 
-
 function sendMessage() {
     const message = messageInput.value.trim();
     if (!message) return;
 
-    socket.emit("chatMessage", { message });
+    socket.emit("chatMessage", { message, roomId: currentRoom });
     messageInput.value = "";
 }
 
+socket.on("message", ({ username, message, timestamp, userId }) => {
+    if (!currentUser) return;
 
-socket.on("message", ({ username, message, timestamp, userId, self }) => {
-    
-    const isSelf = currentUser && userId === currentUser.id;
+    const isSelf = userId === currentUser.id;
     renderMessage(username, message, timestamp, isSelf);
 });
 
@@ -76,7 +91,6 @@ sendBtn.addEventListener("click", (e) => {
     e.preventDefault();
     sendMessage();
 });
-
 
 messageInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
