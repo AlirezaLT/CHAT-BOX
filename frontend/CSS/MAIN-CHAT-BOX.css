@@ -32,6 +32,7 @@
   }
 }
 
+
 @media (max-width: 520px){
     .main-chat{min-height: 100vh; max-width: 100%; border-radius: 0;}
     .chat-display{padding: 8px; gap: 6px;}
@@ -54,17 +55,25 @@ html, body{
 
 body{
     overflow-y: hidden;
-    background-color: #0b0b0f;
-    background:
-        radial-gradient(
-        circle at top,
-        rgba(64, 0, 255, 0.15),
-        transparent 50%
-    ),
-    #0b0b0f;
 }
 
+#bg-canvas{
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: -1;
+    background: #0b0b0b;
+}
 
+.bg-orb{
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.6;
+    will-change: transform;
+}
 
 .wrap{
     height: 100dvh;
@@ -73,42 +82,86 @@ body{
 }
 
 .menu-BTN{
-    position: fixed;
-    top: 16px;
-    right: 16px;
-    font-size: 20px;
-    background: none;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 2  0%;
+    right: 12px;
+    width: 42px;
+    height: 42px;
+    background: rgba(0, 0, 0, 0.30);
+    backdrop-filter: blur(10px);
     border: none;
-    color: #fff;
+    border-radius: 50%;
     cursor: pointer;
-    z-index: 1001;
+    z-index: 20;
+    transition: background 0.2s ease, transform 0.2 ease;
+}
+
+.menu-BTN:hover{
+    background: rgba(0, 0, 0, 0.25);
+    transform: scale(1.05);
+}
+
+.dropedown-icone{
+    width: 22px;
+    height: 22px;
+    fill: white;
+    opacity: 0.9;
 }
 
 .dropdown{
-    position: fixed;
-    top: 60px;
+    position: absolute;
+    top: 70px;
     right: 16px;
-    width: 260px;
-    backdrop-filter: blur(14px);
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 16px;
-    box-shadow:  -5px 25px rgba(0, 0, 0, 0.4);
+    width: 240px;
+    padding: 8px;
+    background: rgba(30, 30, 60, 0.35);
+    backdrop-filter: blur(18px) saturate(120%);
+    border-radius: 20px;
+    border:  1px solid rgba(255, 255, 255, 0.10);
+    box-shadow: 0 20px 40px rgba(255, 255, 255, 0.100);
+    inset: 0 0 0 1px rgba(255, 255, 255, 0.05);
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-8px) scale(0.97);
     pointer-events: none;
-    transition: 0.3s ease;
-    z-index: 1000;
+    transition: opacity 0.25s ease, transform 0.25 ease;
 }
 
 .dropdown-content{
-    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-radius: 14px;
+    padding: 10px;
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(12px);
+    padding: 10px;
+    min-width: 160px;
     color: #fff;
 }
 
 .dropdown.active {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     pointer-events: auto;
+}
+
+.dropdown-content button{
+background: rgba(255, 255, 255, 0.05);
+border: none;
+color: #fff;
+padding: 10px 12px;
+border-radius: 12px;
+text-align: left;
+cursor: pointer;
+transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.dropdown-content button:hover{
+    background: rgba(255, 255, 255, 0.121);
+    transform: translateX(4px);
 }
 
 .main-chat{
@@ -116,6 +169,7 @@ body{
     max-height: 620px;
     height: 100vh;
     width: 90%;
+    position: relative;
     display: flex;
     flex-direction: column;
     background: linear-gradient(135deg,#4027f8, #7e9eff);
@@ -127,13 +181,18 @@ body{
 }
 
 .header{
+position: relative;
+width: 100%;
+height: 60px;
+align-items: center;
+justify-content: center;
+display: flex;
 padding: 15px;
 text-align: center;
 font-weight: bolder;
 color: white;
 background: rgba(0, 0, 0, 0.3);
 backdrop-filter: blur(15px);
-overflow-x: hidden;
 }
 
 .chat-display{
