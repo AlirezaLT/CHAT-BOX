@@ -164,6 +164,38 @@ transition: background 0.2s ease, transform 0.15s ease;
     transform: translateX(4px);
 }
 
+.dd-item{
+    width: 100%;
+    padding: 12px 14px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: #fff;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.dd-item:hover{
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateX(3px);
+}
+
+.dd-item.logout{
+    color: #e50b0b;
+}
+
+.dd-item.logout:hover{
+    background: rgba(255, 92, 92, 0.15);
+}
+
+.dd-divider{
+    height: 1px;
+    margin: 8px 0;
+    background: rgba(255, 255, 255, 0.15);
+}
+
 .main-chat{
     max-width: 490px;
     max-height: 620px;
