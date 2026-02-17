@@ -7,7 +7,7 @@ import roomController from "../controller/roomController.js";
 const router = express.Router();
 
 
-// Chat routes - auth required
+
 router.get('/',auth,pageController.home)
 router.get('/room/:roomId',auth,pageController.home)
 router.get('/api/fetch/message',auth,chatController.getMessage)
@@ -22,7 +22,7 @@ router.get('/signup',pageController.signup)
 router.post('/api/create-room',auth,roomController.createRoom)
 router.get('/api/rooms',auth,roomController.getAllRooms)
 router.get('/api/room/:roomId',auth,roomController.getRoom)
-// router.get('/room/:roomId',auth,pageController.room)
+
 
 router.get('/user/panel',auth,pageController.panel)
 

@@ -4,12 +4,12 @@ const sendBtn = document.querySelector(".send-b");
 
 const token = localStorage.getItem("token");
 
-// اگر توکن نیست، redirect کن به login
+
 if (!token) {
     window.location.href = '/login';
 }
 
-// استخراج roomId از URL
+
 function getRoomIdFromUrl() {
     const path = window.location.pathname;
     const match = path.match(/\/room\/(.+)/);
@@ -81,10 +81,6 @@ socket.on("message", ({ username, message, timestamp, userId }) => {
 
     const isSelf = userId === currentUser.id;
     renderMessage(username, message, timestamp, isSelf);
-});
-
-socket.on("joinRoomSuccess", ({ username, roomId }) => {
-    console.log(`Joined room: ${roomId} as ${username}`);
 });
 
 sendBtn.addEventListener("click", (e) => {

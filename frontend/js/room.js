@@ -61,7 +61,7 @@ if (confirmCreateRoom) {
                 showSuccess(`اتاق "${roomName}" با موفقیت ایجاد شد`);
                 createRoomModal.classList.remove('active');
                 
-                // Redirect to room
+                
                 setTimeout(() => {
                     window.location.href = `/room/${data.roomId}`;
                 }, 1000);
@@ -69,7 +69,6 @@ if (confirmCreateRoom) {
                 showError(data.error || 'خطا در ایجاد اتاق');
             }
         } catch (err) {
-            console.error('Error creating room:', err);
             showError('خطا در اتصال');
         } finally {
             confirmCreateRoom.disabled = false;
