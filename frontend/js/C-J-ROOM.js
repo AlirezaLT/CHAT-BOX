@@ -22,6 +22,5 @@ function closemodal() {
 
     document.querySelector(".dd-item:nth-child(3)") . addEventListener("click" , () => openmodel(joinroommodal));
 
-    document.querySelectorAll("modal-colse")
-        .forEach(btn => btn.addEventListener("click" , closemodal));
-        overlay.addEventListener("click" , closemodal);
+    document.querySelectorAll(".modal-close").forEach(btn => btn.addEventListener("click" , closemodal));
+    overlay.addEventListener("click" , closemodal);
