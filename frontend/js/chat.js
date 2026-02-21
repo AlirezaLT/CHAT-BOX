@@ -1,56 +1,94 @@
-    const socket = io();
-
-    const chatBox = document.querySelector(".chat-display");
-    const messageInput = document.getElementById("chat-sender");
-    const sendBtn = document.querySelector(".send-b");
+const chatBox = document.querySelector(".chat-display");
+const messageInput = document.getElementById("chat-sender");
+const sendBtn = document.querySelector(".send-b");
 
 
-    const token = localStorage.getItem("token");
-    
 
-    sendBtn.addEventListener("click", (e) => {
-        e.preventDefault(); 
-        sendMessage();
-    });
+function getRoomIdFromUrl() {
+    const path = window.location.pathname;
+    const match = path.match(/\/room\/(.+)/);
+    return match ? match[1] : "public";
+}
 
+let currentRoom = getRoomIdFromUrl();
+let currentUser = null;
 
-    messageInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-            e.preventDefault();
-            sendMessage();
+const socket = io();
+
+window.addEventListener("load", async () => {
+    socket.emit("joinRoom", { token, roomId: currentRoom });
+    await getMessage();
+});
+
+function renderMessage(username, message, timestamp, self) {
+    const wrapper = document.createElement("div");
+    wrapper.className = `chat-message ${self ? "SENT" : "RECEIVED"}`;
+
+    wrapper.innerHTML = `
+        <div class="CHAT">
+            <div class="sender namem">${username} | ${timestamp}</div>
+            <div>${message}</div>
+        </div>
+    `;
+
+    chatBox.appendChild(wrapper);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+async function getMessage() {
+    try {
+        const res = await fetch(`/api/fetch/message?roomId=${currentRoom}`, {
+            credentials: 'include'
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+
+            chatBox.innerHTML = "";
+
+            if (data.currentUser) {
+                currentUser = data.currentUser;
+            }
+
+            data.messages.forEach(msg => {
+                const isSelf = currentUser && msg.sender_id === currentUser.id;
+                renderMessage(msg.username, msg.message, msg.created_at, isSelf);
+            });
         }
-    });
 
-    function sendMessage() {
-        const message = messageInput.value.trim();
-        if (!message) return;
-
-        socket.emit("chatMessage", { token, message });
-        messageInput.value = "";
+    } catch (err) {
+        console.error("Error fetching messages:", err);
     }
+}
 
+function sendMessage() {
+    const message = messageInput.value.trim();
+    if (!message) return;
 
-    socket.on("message", ({ username: sender, message, self,timestamp }) => {
-        const msgDiv = document.createElement("div");
-        msgDiv.classList.add("CHAT");
+    socket.emit("chatMessage", { message, roomId: currentRoom });
+    messageInput.value = "";
+}
 
+socket.on("message", ({ username, message, timestamp, userId }) => {
+    if (!currentUser) return;
 
-        const senderDiv = document.createElement("div");
-        senderDiv.classList.add("sender", "namem");
-        senderDiv.textContent = `${sender } | ${timestamp}`;
-        msgDiv.appendChild(senderDiv);
-        
-        const textDiv = document.createElement("div");
-        textDiv.textContent = message;
-        msgDiv.appendChild(textDiv);
-        
-        const wrapperDiv = document.createElement("div");
-        wrapperDiv.classList.add("chat-message");
-        wrapperDiv.classList.add(self ? "SENT" : "RECEIVED");
+    const isSelf = userId === currentUser.id;
+    renderMessage(username, message, timestamp, isSelf);
+});
 
-        wrapperDiv.appendChild(msgDiv);
-        chatBox.appendChild(wrapperDiv);
+sendBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    sendMessage();
+});
 
+messageInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        sendMessage();
+    }
+});
 
-        chatBox.scrollTop = chatBox.scrollHeight;
-    });
+socket.on("messageError", (msg) => {
+    console.log("Message error:", msg);
+});

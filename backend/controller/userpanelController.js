@@ -2,6 +2,15 @@ import jwt from "jsonwebtoken"
 import usermodel from "../models/userModel.js";
 import Joi from "joi";
 
+async function username(req,res) {
+    try {
+        const username = req.user.username;
+        res.json({success: true,data:username})
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 async function userDate(req,res) {
     try {
         const userId = req.user.id
@@ -38,7 +47,15 @@ async function changeUsername(req, res) {
         const decoded = jwt.verify(token, process.env.SECRET_KEY);
         const userId = decoded.id;
         await usermodel.updateUsername(userId, username);
-        res.json({ success: true });
+
+        res.clearCookie('token');
+        const newtoken=jwt.sign({id: userId,username:username},process.env.SECRET_KEY,{expiresIn: '7d'});
+        res.cookie('token', newtoken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV ,
+            maxAge: 7 * 24 * 60 * 60 * 1000
+        });
+        res.json({ success: true ,data:newtoken});
         
         
     } catch (error) {
@@ -54,6 +71,7 @@ res.redirect('/login')
 }
 
 const panelcontroller = {
+    username,
     userDate,
     changeUsername,
     logout

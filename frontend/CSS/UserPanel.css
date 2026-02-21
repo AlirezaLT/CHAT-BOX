@@ -298,44 +298,4 @@ overflow-x: hidden;
     opacity: .8;
     border: 1px solid rgb(255, 208, 0);
   }
-/* Notification styles */
-#notification-container {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 9999;
-}
-
-.notification {
-  min-width: 260px;
-  padding: 14px 18px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  color: #fff;
-  font-size: 14px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  animation: slideIn 0.3s ease;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  opacity: 1;
-  transform: translateX(0);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.notification .message { flex: 1; }
-.notification .close-btn { background: transparent; border: none; color: inherit; font-size: 16px; cursor: pointer; padding: 0 6px; line-height: 1; }
-
-.notification.success {
-  background-color: #2ecc71;
-}
-
-.notification.error {
-  background-color: #e74c3c;
-}
-
-.notification.info {
-  background-color: #3498db;
-}
 
