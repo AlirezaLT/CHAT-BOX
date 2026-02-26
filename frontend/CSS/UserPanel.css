@@ -76,7 +76,7 @@ body{
     position: fixed;
     inset: 0;
     z-index: 0;
-    pointer-events: none;
+    
 }
 
 .blur-circle {
@@ -179,6 +179,7 @@ overflow-x: hidden;
         #313131,
         #4e4e4e
     );      
+    border: 1px solid rgb(255, 208, 0);
   }
   
 /***************** NAV END *****************/
@@ -218,6 +219,12 @@ overflow-x: hidden;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+  }
+
+  .avatar:hover{
+    border: 3px solid rgb(231, 190, 4);
+    width: 125px;
+    height: 125px;
   }
   /***************** UserProfile end*****************/
   label {
@@ -261,6 +268,14 @@ overflow-x: hidden;
     background: rgba(15, 23, 42, 0.95);
     transform: translateY(-1px);
   }
+  .inputs:hover{
+    border-color:rgb(255, 208, 0);
+    box-shadow:
+      0 0 0 1px rgba(124, 138, 0, 0.7),
+      0 12px 30px rgba(160, 175, 30, 0.35);
+    background: rgba(42, 42, 15, 0.95);
+    transform: translateY(-1px);
+  }
   
   .s-button {
     margin-top: 60px;
@@ -281,45 +296,6 @@ overflow-x: hidden;
   
   .s-button:hover {
     opacity: .8;
+    border: 1px solid rgb(255, 208, 0);
   }
-/* Notification styles */
-#notification-container {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 9999;
-}
-
-.notification {
-  min-width: 260px;
-  padding: 14px 18px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  color: #fff;
-  font-size: 14px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  animation: slideIn 0.3s ease;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  opacity: 1;
-  transform: translateX(0);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.notification .message { flex: 1; }
-.notification .close-btn { background: transparent; border: none; color: inherit; font-size: 16px; cursor: pointer; padding: 0 6px; line-height: 1; }
-
-.notification.success {
-  background-color: #2ecc71;
-}
-
-.notification.error {
-  background-color: #e74c3c;
-}
-
-.notification.info {
-  background-color: #3498db;
-}
 

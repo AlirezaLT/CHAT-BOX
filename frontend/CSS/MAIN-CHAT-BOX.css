@@ -32,6 +32,7 @@
   }
 }
 
+
 @media (max-width: 520px){
     .main-chat{min-height: 100vh; max-width: 100%; border-radius: 0;}
     .chat-display{padding: 8px; gap: 6px;}
@@ -39,7 +40,16 @@
     footer{padding: 8px;}
 }
 
+@media (max-width: 460px) {
+    .input-row{flex-direction: column; align-items: stretch;}
+    .input-row .btn {width: 100%;}
+    #copyRoomBTtn{ min-width: auto;}
+}
 
+@media (max-width: 460px) {
+    .join-body .input-row {flex-direction: column; align-items: stretch;}
+    .join-body .input-row .btn {width: 100%;}
+}
 
 * {
     box-sizing: border-box;
@@ -54,17 +64,25 @@ html, body{
 
 body{
     overflow-y: hidden;
-    background-color: #0b0b0f;
-    background:
-        radial-gradient(
-        circle at top,
-        rgba(64, 0, 255, 0.15),
-        transparent 50%
-    ),
-    #0b0b0f;
 }
 
+#bg-canvas{
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    z-index: -1;
+    background: #0b0b0b;
+}
 
+.bg-orb{
+    position: absolute;
+    width: 380px;
+    height: 380px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.6;
+    will-change: transform;
+}
 
 .wrap{
     height: 100dvh;
@@ -73,42 +91,118 @@ body{
 }
 
 .menu-BTN{
-    position: fixed;
-    top: 16px;
-    right: 16px;
-    font-size: 20px;
-    background: none;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 2  0%;
+    right: 12px;
+    width: 42px;
+    height: 42px;
+    background: rgba(0, 0, 0, 0.30);
+    backdrop-filter: blur(10px);
     border: none;
-    color: #fff;
+    border-radius: 50%;
     cursor: pointer;
-    z-index: 1001;
+    z-index: 20;
+    transition: background 0.2s ease, transform 0.2 ease;
+}
+
+.menu-BTN:hover{
+    background: rgba(0, 0, 0, 0.25);
+    transform: scale(1.05);
+}
+
+.dropedown-icone{
+    width: 22px;
+    height: 22px;
+    fill: white;
+    opacity: 0.9;
 }
 
 .dropdown{
-    position: fixed;
-    top: 60px;
+    position: absolute;
+    top: 70px;
     right: 16px;
-    width: 260px;
-    backdrop-filter: blur(14px);
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 16px;
-    box-shadow:  -5px 25px rgba(0, 0, 0, 0.4);
+    width: 240px;
+    padding: 8px;
+    background: rgba(30, 30, 60, 0.35);
+    backdrop-filter: blur(18px) saturate(120%);
+    border-radius: 20px;
+    border:  1px solid rgba(255, 255, 255, 0.10);
+    box-shadow: 0 20px 40px rgba(255, 255, 255, 0.100);
+    inset: 0 0 0 1px rgba(255, 255, 255, 0.05);
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-8px) scale(0.97);
     pointer-events: none;
-    transition: 0.3s ease;
-    z-index: 1000;
+    transition: opacity 0.25s ease, transform 0.25 ease;
 }
 
 .dropdown-content{
-    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-radius: 14px;
+    padding: 10px;
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(12px);
+    padding: 10px;
+    min-width: 160px;
     color: #fff;
 }
 
 .dropdown.active {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     pointer-events: auto;
+}
+
+.dropdown-content button{
+background: rgba(255, 255, 255, 0.05);
+border: none;
+color: #fff;
+padding: 10px 12px;
+border-radius: 12px;
+text-align: left;
+cursor: pointer;
+transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.dropdown-content button:hover{
+    background: rgba(255, 255, 255, 0.121);
+    transform: translateX(4px);
+}
+
+.dd-item{
+    width: 100%;
+    padding: 12px 14px;
+    border: none;
+    border-radius: 10px;
+    background: transparent;
+    color: #fff;
+    font-size: 14px;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.dd-item:hover{
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateX(3px);
+}
+
+.dd-item.logout{
+    color: #e50b0b;
+}
+
+.dd-item.logout:hover{
+    background: rgba(255, 92, 92, 0.15);
+}
+
+.dd-divider{
+    height: 1px;
+    margin: 8px 0;
+    background: rgba(255, 255, 255, 0.15);
 }
 
 .main-chat{
@@ -116,6 +210,7 @@ body{
     max-height: 620px;
     height: 100vh;
     width: 90%;
+    position: relative;
     display: flex;
     flex-direction: column;
     background: linear-gradient(135deg,#4027f8, #7e9eff);
@@ -127,13 +222,18 @@ body{
 }
 
 .header{
+position: relative;
+width: 100%;
+height: 60px;
+align-items: center;
+justify-content: center;
+display: flex;
 padding: 15px;
 text-align: center;
 font-weight: bolder;
 color: white;
 background: rgba(0, 0, 0, 0.3);
 backdrop-filter: blur(15px);
-overflow-x: hidden;
 }
 
 .chat-display{
@@ -263,44 +363,147 @@ transition: transform 0.25s ease,box-shadow 0.25s ease, background 0.25s ease;
     transition: transform 0.25s ease, filter 0.25s ease;
 }
 
-/* Notification styles */
-#notification-container {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 9999;
+.modal-overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(14px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
 }
 
-.notification {
-  min-width: 260px;
-  padding: 14px 18px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  color: #fff;
-  font-size: 14px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  animation: slideIn 0.3s ease;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  opacity: 1;
-  transform: translateX(0);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+.modal-overlay.active{
+    opacity: 1;
+    pointer-events: auto;
 }
 
-.notification .message { flex: 1; }
-.notification .close-btn { background: transparent; border: none; color: inherit; font-size: 16px; cursor: pointer; padding: 0 6px; line-height: 1; }
-
-.notification.success {
-  background-color: #2ecc71;
+.modal{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    width: 90%;
+    max-width: 380px;
+    background: rgba(20, 20, 20, 0.75);
+    backdrop-filter: blur(18px);
+    border-radius: 18px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 1001;
 }
 
-.notification.error {
-  background-color: #e74c3c;
+.modal-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    font-weight: bold;
+    color: #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
 }
 
-.notification.info {
-  background-color: #3498db;
+.modal.active{
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
 }
 
+.modal-close{
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.modal-body{
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.field{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field-label{
+    font-size: 17px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.input-row{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modal-body input[type="text"] {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    color: #000000;
+    outline: none;
+    transition: box-shadow 0.15s ease, border-color 0.12s ease;
+}
+
+.modal-body input[type="text"]:focus {
+    border-color: rgba(90, 130, 255, 0.9);
+    box-shadow: 0 6px 18px rgba(79, 140, 255, 0.12);
+}
+
+.btn{
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.12s ease, background 0.12s ease;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.btn-primary{
+    background: linear-gradient(135deg , #5b27f8 , #2fb3ff);
+    color: #fff;
+}
+
+.btn-cat{
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: linear-gradient(135deg , #4f8cff , #2fb3ff);
+    color: #fff;
+}
+
+.btn:not([disabled]):hover {
+    transform: translateY(-3px);
+    filter: brightness(1.05);
+}
+
+.btn[disabled] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+#copyRoomBTtn{
+    min-width: 68px;
+}
+
+.join-body .hint.small {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.75);
+    margin-top: 6px;
+    opacity: 0.9;
+}

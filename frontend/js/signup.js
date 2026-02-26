@@ -1,5 +1,3 @@
-import { TokenExpiredError } from "jsonwebtoken";
-
 const form = document.querySelector('form');
 const username = form.querySelector('input[name="username"]');
 const password = document.getElementById('password');
@@ -38,8 +36,7 @@ form.addEventListener('submit', async function (e) {
       body: JSON.stringify(body)
     });
 
-
-     data = await res.json() 
+    const data = await res.json(); 
 
     if (res.ok && data && data.success) {
       try { localStorage.setItem('token',data.token); } catch (e) { }

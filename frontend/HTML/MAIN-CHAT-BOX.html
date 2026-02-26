@@ -4,20 +4,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CHAT-BOX</title>
     <link rel="stylesheet" type="text/css" href="../CSS/MAIN-CHAT-BOX.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/notification.css">
 </head>
 <body>
+    <div id="bg-canvas"> </div>
     <main class="wrap">
-
-        <button class="menu-BTN" id="menuBTN">_</button>
-
-        <div class="dropdown" id="dropdown">
-            <div class="dropdown-content"></div>
-        </div>
 
         <section class="main-chat">
             <header class="header">
                 <div class="logo"></div>
                 <h2 style="margin: 0; padding-top: 10px;">CHAT-BOX</h2>
+
+                    <button class="menu-BTN" id="menuBTN" aria-label="open menu">
+                        <svg class="dropedown-icone" viewbox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="5" r="1.8"/>
+                            <circle cx="12" cy="12" r="1.8"/>
+                            <circle cx="12" cy="19" r="1.8"/>
+                        </svg>
+                    </button>
+
+                    <div class="dropdown" id="dropdown">
+                        <div class="dropdown-content">
+                            <button class="dd-item">Profile Panel</button>
+                            <button class="dd-item">Create Room</button>
+                            <button class="dd-item">Join Room</button>
+                            <div class="dd-divider"></div>
+                            <button class="dd-item logout" onclick="window.location.href='/user/logout'">LOGOUT</button>
+                        </div>
+                    </div>
             </header>
 
             <div class="chat-display"></div>
@@ -37,10 +51,78 @@
 
     <div id="notification-container"></div>
 
+
+    <div class="modal-overlay" id="modaloverlay"></div>
+
+    <div class="modal" id="createroommodal">
+        <div class="modal-header">
+            <span>Create Room</span>
+            <button class="modal-close">&times;</button>
+        </div>
+
+        <div class="modal-body">
+            <label class="field">
+                <div class="field-label">
+                    Room-Name
+                </div>
+                <div class="input-row">
+                    <input type="text" id="roomNameInput" autocomplete="off" placeholder="Enter your Room Name:"/>
+                    <button id="createRoomBTtn" class="btn btn-primary" disabled>
+                        Create
+                    </button>
+                </div>
+            </label>
+
+            <label class="field">
+                <div class="field-label">
+                    Room-Link
+                </div>
+                <div class="input-row">
+                    <input type="text" id="roomLinkInput" readonly placeholder="Your Room link appear Here"/>
+                    <button id="copyRoomBTtn" class="btn" disabled>
+                        Copy
+                    </button>
+                    
+                </div>
+
+                <div style="padding-top: 5px;">
+                    <button class="btn btn-cat" id="enterRoomBtn" disabled>Enter Your New Room</button>
+                </div>
+            </label>
+        </div>
+        
+    </div>
+
+    <div class="modal"  id="joinroommodal">
+        <div class="modal-header">
+            <span>Join Room</span>
+            <button class="modal-close">&times;</button>
+        </div>
+
+        <div class="modal-body join-body">
+            <label class="field">
+                <div class="field-label">
+                    Room-Link
+                </div>
+                <div class="input-row">
+                    <input type="text" id="joinLinkInput" autocomplete="off" placeholder="Paste Room Link:"/>
+                    <button id="joinRoomBTtn" class="btn btn-primary" disabled>
+                        Join
+                    </button>
+                </div>
+            </label>
+
+            <div class="hint small">
+                Paste The Room Link You Received or Type a Room Path (e.g. /room/abd123) Then press Join.   
+            </div>
+        </div>
+
+    </div>
+    <script src="../js/C-J-ROOM.js"></script>
+    <script src="../js/BG.js"></script>
     <script src="../js/DROPDOWN.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"> </script>
     <script src="../js/chat.js"></script>
     <script src="../js/notification.js"></script>
 </body>
 </html>
-    
