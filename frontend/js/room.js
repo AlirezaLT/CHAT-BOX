@@ -1,4 +1,3 @@
-// Room Management with Modal
 
 const createRoomBtn = document.getElementById('createRoomBtn');
 const joinRoomBtn = document.getElementById('joinRoomBtn');

@@ -47,7 +47,6 @@
     return notification;
   }
 
-  // Helper wrappers
   function showSuccess(message, duration = 3000) { return showNotification(message, 'success', duration); }
   function showError(message, duration = 4000) { return showNotification(message, 'error', duration); }
   function showInfo(message, duration = 3000) { return showNotification(message, 'info', duration); }

@@ -32,7 +32,6 @@ async function createRoom(req, res) {
             return res.status(400).json({ success: false, error: 'Room name is required' });
         }
 
-        // تولید roomId تصادفی
         const roomId = 'room_' + Date.now();
 
         await roomModel.createRoom(roomId, roomName, userId);
