@@ -61,7 +61,34 @@
         </div>
 
         <div class="modal-body">
-            <!-- options-->
+            <label class="field">
+                <div class="field-label">
+                    Room-Name
+                </div>
+                <div class="input-row">
+                    <input type="text" id="roomNameInput" autocomplete="off" placeholder="Enter your Room Name:"/>
+                    <button id="createRoomBTtn" class="btn btn-primary" disabled>
+                        Create
+                    </button>
+                </div>
+            </label>
+
+            <label class="field">
+                <div class="field-label">
+                    Room-Link
+                </div>
+                <div class="input-row">
+                    <input type="text" id="roomLinkInput" readonly placeholder="Your Room link appear Here"/>
+                    <button id="copyRoomBTtn" class="btn" disabled>
+                        Copy
+                    </button>
+                    
+                </div>
+
+                <div style="padding-top: 5px;">
+                    <button class="btn btn-cat" id="enterRoomBtn" disabled>Enter Your New Room</button>
+                </div>
+            </label>
         </div>
         
     </div>
@@ -72,8 +99,22 @@
             <button class="modal-close">&times;</button>
         </div>
 
-        <div class="modal-body">
-            <!-- options-->
+        <div class="modal-body join-body">
+            <label class="field">
+                <div class="field-label">
+                    Room-Link
+                </div>
+                <div class="input-row">
+                    <input type="text" id="joinLinkInput" autocomplete="off" placeholder="Paste Room Link:"/>
+                    <button id="joinRoomBTtn" class="btn btn-primary" disabled>
+                        Join
+                    </button>
+                </div>
+            </label>
+
+            <div class="hint small">
+                Paste The Room Link You Received or Type a Room Path (e.g. /room/abd123) Then press Join.   
+            </div>
         </div>
 
     </div>

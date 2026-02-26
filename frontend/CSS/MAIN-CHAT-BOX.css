@@ -40,7 +40,16 @@
     footer{padding: 8px;}
 }
 
+@media (max-width: 460px) {
+    .input-row{flex-direction: column; align-items: stretch;}
+    .input-row .btn {width: 100%;}
+    #copyRoomBTtn{ min-width: auto;}
+}
 
+@media (max-width: 460px) {
+    .join-body .input-row {flex-direction: column; align-items: stretch;}
+    .join-body .input-row .btn {width: 100%;}
+}
 
 * {
     box-sizing: border-box;
@@ -409,4 +418,92 @@ transition: transform 0.25s ease,box-shadow 0.25s ease, background 0.25s ease;
     color: #fff;
     font-size: 22px;
     cursor: pointer;
+}
+
+.modal-body{
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.field{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field-label{
+    font-size: 17px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.input-row{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modal-body input[type="text"] {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    color: #000000;
+    outline: none;
+    transition: box-shadow 0.15s ease, border-color 0.12s ease;
+}
+
+.modal-body input[type="text"]:focus {
+    border-color: rgba(90, 130, 255, 0.9);
+    box-shadow: 0 6px 18px rgba(79, 140, 255, 0.12);
+}
+
+.btn{
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.12s ease, background 0.12s ease;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.btn-primary{
+    background: linear-gradient(135deg , #5b27f8 , #2fb3ff);
+    color: #fff;
+}
+
+.btn-cat{
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: linear-gradient(135deg , #4f8cff , #2fb3ff);
+    color: #fff;
+}
+
+.btn:not([disabled]):hover {
+    transform: translateY(-3px);
+    filter: brightness(1.05);
+}
+
+.btn[disabled] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+#copyRoomBTtn{
+    min-width: 68px;
+}
+
+.join-body .hint.small {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.75);
+    margin-top: 6px;
+    opacity: 0.9;
 }
