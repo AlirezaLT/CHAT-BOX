@@ -1,15 +1,16 @@
 import roomModel from "../models/roomModel.js";
 
-async function getRoom(req,res){
-    try{
-        const roomId = req.params;
+async function getRoom(req, res) {
+    try {
+        const { roomId } = req.params;
         const room = await roomModel.getRoom(roomId);
-	    if(!room){
-		res.json({success: false,error: "Room Not Found"})
-	    }
-	    res.json({success: true,data: room})
-    }catch(err){
+        if (!room) {
+            return res.json({ success: false, error: "Room Not Found" });
+        }
+        res.json({ success: true, data: room });
+    } catch (err) {
         console.log(err);
+        res.status(500).json({ success: false, error: err.message });
     }
 }
 
@@ -22,7 +23,6 @@ async function getAllRooms (req,res){
         console.log(err)
     }
 }
-
 async function createRoom(req, res) {
     try {
         const { roomName } = req.body;
@@ -33,10 +33,12 @@ async function createRoom(req, res) {
         }
 
         const roomId = 'room_' + Date.now();
-
         await roomModel.createRoom(roomId, roomName, userId);
 
-        res.json({ success: true, roomId, roomName, message: 'Room created successfully' });
+        // ✅ Build the roomUrl the frontend expects
+        const roomUrl = `${req.protocol}://${req.get('host')}/room/${roomId}`;
+
+        res.json({ success: true, roomId, roomName, roomUrl, message: 'Room created successfully' });
     } catch (err) {
         console.log(err);
         res.status(500).json({ success: false, error: err.message });
