@@ -54,7 +54,6 @@ function chat(io, socket) {
     });
 }
 
-// دریافت پیام‌های یک روم مشخص
 async function getMessage(req, res) {
     try {
         const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
@@ -63,11 +62,9 @@ async function getMessage(req, res) {
         const user = jwt.verify(token, process.env.SECRET_KEY);
         const userId = user.id;
 
-        // دریافت roomId از query parameter
         const roomId = req.query.roomId || "public";
         const messages = await chatModel.getMessage(roomId);
 
-        // اضافه کردن self به هر پیام
         const formattedMessages = messages.map(msg => ({
             username: msg.username,
             message: msg.message,
